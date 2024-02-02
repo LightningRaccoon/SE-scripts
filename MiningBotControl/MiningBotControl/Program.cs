@@ -74,11 +74,11 @@ namespace IngameScript
 
             foreach (var thrust in thrusters)
             {
-                if (thrust.CurrentThrustPercentage.Equals(100F))
+                if (thrust.CurrentThrustPercentage.Equals(100F) && thrust.MaxThrust > 2000000)
                 {
                     thrust.ThrustOverridePercentage = 0F;
                 }
-                else
+                else if (thrust.MaxThrust > 2000000)
                 {
                     thrust.ThrustOverridePercentage = 100F;
                 }

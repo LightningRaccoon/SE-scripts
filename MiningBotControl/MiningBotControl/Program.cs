@@ -45,51 +45,42 @@ namespace IngameScript
 
         public Program()
         {
-
+            // The constructor, called only once every session and
+            // always before any other method is called. Use it to
+            // initialize your script. 
+            //     
+            // The constructor is optional and can be removed if not
+            // needed.
+            // 
+            // It's recommended to set Runtime.UpdateFrequency 
+            // here, which will allow your script to run itself without a 
+            // timer block.
         }
 
         public void Save()
         {
-
+            // Called when the program needs to save its state. Use
+            // this method to save your state to the Storage field
+            // or some other means. 
+            // 
+            // This method is optional and can be removed if not
+            // needed.
         }
-
-        private readonly Color _colorRed = new Color(255, 0, 0);
-        private readonly Color _colorWhite = new Color(255, 255, 255);
 
         public void Main(string argument, UpdateType updateSource)
         {
-            List<IMyLightingBlock> lights = new List<IMyLightingBlock>();
-            GridTerminalSystem.GetBlocksOfType(lights);
+            List<IMyThrust> thrusters = new List<IMyThrust>();
+            GridTerminalSystem.GetBlocksOfType(thrusters);
 
-            List<IMySoundBlock> soundBlocks = new List<IMySoundBlock>();
-            GridTerminalSystem.GetBlocksOfType(soundBlocks);
-
-            foreach (var light in lights)
+            foreach (var thrust in thrusters)
             {
-                if (light.Color == _colorWhite)
+                if (thrust.CurrentThrustPercentage.Equals(100F))
                 {
-                    light.SetValue("Color", _colorRed);
-                    light.Intensity = 15;
-                    light.BlinkIntervalSeconds = 0.5F;
-                    light.BlinkLength = 0.5F;
-                    foreach (var soundBlock in soundBlocks)
-                    {
-                        soundBlock.Range = 500;
-                        soundBlock.Volume = 100;
-                        soundBlock.SelectedSound = "Alert 1";
-                        soundBlock.LoopPeriod = 360;
-                        soundBlock.Play();
-                    }
+                    thrust.ThrustOverridePercentage = 0F;
                 }
                 else
                 {
-                    light.SetValue("Color", _colorWhite);
-                    light.Intensity = 13;
-                    light.BlinkIntervalSeconds = 0;
-                    foreach (var soundBlock in soundBlocks)
-                    {
-                        soundBlock.Stop();
-                    }
+                    thrust.ThrustOverridePercentage = 100F;
                 }
             }
         }

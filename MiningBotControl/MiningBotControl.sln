@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningBotControl", "MiningBotControl\MiningBotControl.csproj", "{AF7AE0F5-2B4A-4952-A67B-369EBBE6D34F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AF7AE0F5-2B4A-4952-A67B-369EBBE6D34F}.Debug|x64.ActiveCfg = Debug|x64
+		{AF7AE0F5-2B4A-4952-A67B-369EBBE6D34F}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1D97BA2-4ADE-4C74-89FA-DC2898745939}
+	EndGlobalSection
+EndGlobal

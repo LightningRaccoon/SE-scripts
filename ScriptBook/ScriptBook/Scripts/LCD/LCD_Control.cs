@@ -1,4 +1,5 @@
 ﻿using Sandbox.Game.EntityComponents;
+using Sandbox.Game.GameSystems;
 using Sandbox.ModAPI.Ingame;
 using Sandbox.ModAPI.Interfaces;
 using SpaceEngineers.Game.ModAPI.Ingame;
@@ -18,11 +19,16 @@ using VRage.Game.ModAPI.Ingame.Utilities;
 using VRage.Game.ObjectBuilders.Definitions;
 using VRageMath;
 
-namespace IngameScript.Scripts.LCD
+namespace IngameScript
 {
-    public class LCD_Control
+    public class LCD_Control : MyGridProgram
     {
         public LCD_Control()
+        {
+
+        }
+
+        public void Save()
         {
 
         }
@@ -30,6 +36,15 @@ namespace IngameScript.Scripts.LCD
         private string panelName = "MyLCD";
         public void Main(string argument, UpdateType updateSource)
         {
+            IMyBlockGroup group = GridTerminalSystem.GetBlockGroupWithName("Debug");
+            List<IMyTextPanel> panels = new List<IMyTextPanel>();
+            group.GetBlocksOfType(panels, panel => panel.Enabled);
+
+            foreach (var panel in panels)
+            {
+                panel.BackgroundColor = Color.LightBlue;
+                panel.WriteText("Booting up debug....");
+            }
 
         }
     }

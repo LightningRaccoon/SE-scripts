@@ -35,7 +35,6 @@ namespace IngameScript
         }
 
         private string panelName = "MyLCD";
-        private string thrustGroupName = "Forward";
         public void Main(string argument, UpdateType updateSource)
         {
             IMyBlockGroup group = GridTerminalSystem.GetBlockGroupWithName(panelName);
@@ -44,32 +43,10 @@ namespace IngameScript
 
             foreach (var panel in panels)
             {
-                panel.BackgroundColor = Color.LightBlue;
-                panel.WriteText("Booting up debug....");
+                panel.BackgroundColor = Color.Gray;
+                panel.WriteText("******************\n");
+                panel.WriteText("-> LCD up");
             }
-
-            IMyBlockGroup groupT = GridTerminalSystem.GetBlockGroupWithName(thrustGroupName);
-            List<IMyThrust> thrusters = new List<IMyThrust>();
-            group.GetBlocksOfType(thrusters, thruster => thruster.Enabled);
-
-            if (thrusters.Count > 0)
-            {
-                panels[0].BackgroundColor = Color.Gray;
-                panels[0].WriteText("Found thrusters");
-            }
-
-            foreach (var thrust in thrusters)
-            {
-                thrust.Enabled = true;
-                thrust.ThrustOverridePercentage = 0.5F;
-            }
-
-
-            List<IMyTimerBlock> timers = new List<IMyTimerBlock>();
-            GridTerminalSystem.GetBlocksOfType(timers);
-
-            timers[0].TriggerDelay = 5F;
-            timers[0].StartCountdown();
 
         }
     }

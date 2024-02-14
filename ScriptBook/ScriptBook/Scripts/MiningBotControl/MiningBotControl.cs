@@ -33,40 +33,66 @@ namespace IngameScript
 
         }
 
-        string groupName = "forwards";
         private string panelName = "debugLCD";
+        private string thrustGroupName = "Forward";
 
         List<IMyThrust> thrusters = new List<IMyThrust>();
         List<IMyBlockGroup> groups = new List<IMyBlockGroup>();
 
+
         public void Main(string argument, UpdateType updateSource)
         {
 
-            // Get all block groups
-            GridTerminalSystem.GetBlockGroups(groups);
+            IMyBlockGroup ThrusterGroup = GridTerminalSystem.GetBlockGroupWithName(thrustGroupName);
+            List<IMyThrust> thrusters = new List<IMyThrust>();
+            ThrusterGroup.GetBlocksOfType(thrusters, thruster => thruster.Enabled);
 
-            // Find the group with the specified name
-            IMyBlockGroup thrusterGroup = groups.Find(group => group.Name == groupName);
+            List<IMyShipDrill> drills = new List<IMyShipDrill>();
+            GridTerminalSystem.GetBlocksOfType(drills, drill =>  drill.Enabled);
 
-            // If the group is found, get thrusters from the group
-            if (thrusterGroup != null)
+            foreach(var drill in drills)
             {
-                thrusterGroup.GetBlocksOfType(thrusters);
+                drill.Enabled = true;
+                //drill.
             }
 
-            WriteDataToPanel(panelName);
+            if (thrusters.Count > 0 )
+            {
+                WriteDataToPanel(panelName);
+            }
+            
 
             foreach (var thrust in thrusters)
             {
-                if (thrust.CurrentThrustPercentage.Equals(100F) && thrust.MaxThrust > 2000000)
-                {
-                    thrust.ThrustOverridePercentage = 0F;
-                }
-                else if (thrust.MaxThrust > 2000000)
-                {
-                    thrust.ThrustOverridePercentage = 100F;
-                }
+                thrust.Enabled = true;
+                thrust.ThrustOverridePercentage = 0.02F;
             }
+
+
+            List<IMyTimerBlock> timers = new List<IMyTimerBlock>();
+            GridTerminalSystem.GetBlocksOfType(timers);
+
+            timers[0].TriggerDelay = 10F;
+            timers[0].StartCountdown();
+
+            foreach (var thrust in thrusters)
+            {
+                thrust.ThrustOverridePercentage = 0F;
+            }
+
+            //WriteDataToPanel(panelName);
+
+            //foreach (var thrust in thrusters)
+            //{
+            //    if (thrust.CurrentThrustPercentage.Equals(100F) && thrust.MaxThrust > 2000000)
+            //    {
+            //        thrust.ThrustOverridePercentage = 0F;
+            //    }
+            //    else if (thrust.MaxThrust > 2000000)
+            //    {
+            //        thrust.ThrustOverridePercentage = 100F;
+            //    }
+            //}
         }
 
         void WriteDataToPanel(string panelName)

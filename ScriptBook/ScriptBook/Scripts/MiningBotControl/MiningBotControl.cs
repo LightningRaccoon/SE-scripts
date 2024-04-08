@@ -53,7 +53,7 @@ namespace IngameScript
             foreach(var drill in drills)
             {
                 drill.Enabled = true;
-                //drill.
+                //drill.ApplyAction()
             }
 
             if (thrusters.Count > 0 )
